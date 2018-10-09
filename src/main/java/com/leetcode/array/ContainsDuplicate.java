@@ -44,7 +44,8 @@ public class ContainsDuplicate {
     }
 
     public static boolean containsDuplicate2(int[] nums) {
-        //该解法有误 4,1,2,3,4
+        // 该解法为LeetCode用时最短的解法
+        // 但是结果貌似有误 4,1,2,3,4
         for (int i = 1; i < nums.length; i++) {
             for (int j = i - 1; j >= 0; j--) {
                 if (nums[i] > nums[j]) {

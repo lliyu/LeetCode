@@ -4,15 +4,16 @@ public class ListNode {
     int val;
     ListNode next;
 
-    public static ListNode createList(){
-        ListNode node = new ListNode(1);
-        ListNode node1 = new ListNode(2);
-        ListNode node2 = new ListNode(3);
-        ListNode node3 = new ListNode(4);
-        node.next = node1;
-        node1.next = node2;
-        node2.next = node3;
-        return node;
+    public static ListNode createList(int[] nums){
+        ListNode head = new ListNode(0);
+        ListNode next = head;
+        for(int num:nums){
+            ListNode node = new ListNode(num);
+            head.next = node;
+            head = head.next;
+        }
+
+        return next.next;
     }
 
     ListNode(int x) {

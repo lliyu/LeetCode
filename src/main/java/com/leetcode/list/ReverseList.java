@@ -13,7 +13,7 @@ package com.leetcode.list;
  */
 public class ReverseList {
     public static void main(String[] args) {
-        ListNode node = ListNode.createList();
+        ListNode node = ListNode.createList(new int[]{1, 4, 5, 6});
         node = reverseList(node);
         while(node != null){
             System.out.print(node.val + " -> ");

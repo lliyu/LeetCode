@@ -1,5 +1,8 @@
 package com.leetcode.dynamic;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 爬楼梯
  * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
@@ -28,6 +31,7 @@ public class ClimbStairs {
 
     public static void main(String[] args) {
         System.out.println(climbStairs(0));
+        Map map = new HashMap();
     }
 
     //递归

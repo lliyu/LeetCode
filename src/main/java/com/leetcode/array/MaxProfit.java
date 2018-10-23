@@ -28,8 +28,8 @@ package com.leetcode.array;
  */
 public class MaxProfit {
     public static void main(String[] args) {
-        int[] nums =new int[]{7,1,5,3,6,4};
-        System.out.println(maxProfit2(nums));
+        int[] nums =new int[]{7,3,5,1,2};
+        System.out.println(maxProfit3(nums));
     }
 
     public static int maxProfit1(int[] prices) {
@@ -63,5 +63,59 @@ public class MaxProfit {
                 sum += prices[i+1] - prices[i];
         }
         return sum;
+    }
+
+    /**
+     * 假设只能成交一笔交易
+     * @param prices
+     * @return
+     */
+    public static int maxProfit3(int[] prices) {
+        //最大值
+        int res = 0;
+        if (prices.length == 0) {
+            return 0;
+        }
+
+        //判断应该在哪一日买入,即最小值
+        int price = prices[0];
+        //遍历所有交易日价格
+        for (int i = 1; i < prices.length; i++) {
+            //判断本日是否能够卖出
+            if (prices[i] > price) {
+                //判断如果本日卖出收益是否最大
+                if (res < (prices[i] - price)) {
+                    res = prices[i] - price;
+                }
+            } else {
+                //判断本日是否为最低价格
+                price = prices[i];
+            }
+        }
+        return res;
+    }
+
+    private static void maxPro(int[] prices, int len) {
+
+    }
+
+    public static int maxNum(int[] prices,int len){
+        int max = 0;
+        for(int i=0;i<len;i++){
+            if(prices[i] > max){
+                max = i;
+            }
+        }
+        return max;
+    }
+
+    public static int minNum(int[] prices,int len){
+        int min = 0;
+        for(int i=0;i<len;i++){
+            if(prices[i] < min){
+                min = i;
+            }
+        }
+        return min;
     }
 }

@@ -22,7 +22,7 @@ public class MissingNumber {
     }
 
     //n * (n + 1)/2为等差数列公式  算出0-n的和
-    //用算出的值减去实际的总和几位不存在的数
+    //用算出的值减去实际的总和即为不存在的数
     public static int missingNumber(int[] nums) {
         int sum = 0, n = nums.length;
         for (int a : nums) {

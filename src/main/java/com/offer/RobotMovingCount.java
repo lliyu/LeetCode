@@ -10,8 +10,70 @@ package com.offer;
  */
 public class RobotMovingCount {
 
-    public int movingCount(int[][] nums){
+    public static void main(String[] args) {
+        System.out.println(movingCount(4, 4, 4));
+    }
 
-        return 0;
+    public static int movingCount(int m, int n, int k){
+
+        if(m<0 || n<0 || k<0)
+            return 0;
+
+        int count = 0;
+
+        boolean[][] visited = new boolean[m][n];
+
+        return caclulateCount(m, n, visited, count, 0, 0, k);
+    }
+
+    private static int caclulateCount(int m, int n, boolean[][] visited, int count, int row, int col, int k) {
+        //越界判断
+        if(row<0 || col<0 || row>=m || col>=n ||visited[row][col])
+            return count;
+
+        //是否可以前进
+        if(isCount(k, row, col)){
+            count++;
+        }
+
+        //后面不在计数
+        visited[row][col] = true;
+
+        //是否已经遍历完成
+//        if(isRetrun(visited)){
+//            finish = true;
+//            return count;
+//        }
+        //向下
+        count = caclulateCount(m, n, visited, count, row+1, col, k);
+
+        count = caclulateCount(m, n, visited, count, row, col+1, k);
+
+        count = caclulateCount(m, n, visited, count, row-1, col, k);
+
+        count = caclulateCount(m, n, visited, count, row, col-1, k);
+
+        return count;
+    }
+
+    private static boolean isRetrun(boolean[][] visited) {
+        for(int i=0;i<visited.length;i++)
+            for(int j=0;j<visited[0].length;j++)
+                if(!visited[i][j])
+                    return false;
+        return true;
+    }
+
+    private static boolean isCount(int k, int row, int col) {
+        int num = 0;
+        while(row!=0){
+            num+=row%10;
+            row/=10;
+        }
+        while(col!=0){
+            num+=col%10;
+            col/=10;
+        }
+        return k>=num;
     }
 }

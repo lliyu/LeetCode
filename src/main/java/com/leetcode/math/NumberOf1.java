@@ -1,7 +1,5 @@
 package com.leetcode.math;
 
-import java.math.BigInteger;
-
 /**
  * @Auther: Administrator
  * @Date: 2019-01-09 10:46

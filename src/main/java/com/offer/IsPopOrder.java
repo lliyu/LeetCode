@@ -16,7 +16,8 @@ public class IsPopOrder {
 
     public static boolean isPopOrder(int[] pushOrder,int[] popOrder){
         //保证健壮性
-        if(pushOrder.length==0 || popOrder.length==0 || popOrder.length!=pushOrder.length)
+        if(popOrder==null || pushOrder==null || pushOrder.length==0
+                || popOrder.length==0 || popOrder.length!=pushOrder.length)
             return false;
 
         int len = 0, stackLength = popOrder.length;

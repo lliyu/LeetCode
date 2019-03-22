@@ -1,9 +1,6 @@
 package com.leetcode.tree;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 二叉树的层次遍历
@@ -42,6 +39,7 @@ public class LevelOrder {
         node1.left = node5;
         node1.right = node6;
         System.out.println(levelOrder(root));
+//        nonRecAfterOrder(root);
     }
 
     public static List<List<Integer>> levelOrder1(TreeNode root) {
@@ -102,5 +100,77 @@ public class LevelOrder {
         tree.add(root.val);
         order(root.left,list,depth+1);
         order(root.right,list,depth+1);
+    }
+
+    public static void preOrder(TreeNode root){
+        if(root==null)
+            return;
+        System.out.println(root.val);
+        if(root.left!=null){
+            preOrder(root.left);
+        }
+        if(root.right!=null){
+            preOrder(root.right);
+        }
+    }
+
+    public static void nonRecPreOrder(TreeNode root){
+        if(root==null)
+            return;
+        Stack stack = new Stack();
+        TreeNode node = root;
+        //左子树的节点遍历
+        while(!stack.isEmpty() || node!=null){
+            while (node!=null){
+                System.out.println(node.val);
+                stack.push(node);
+                node = node.left;
+            }
+            if(!stack.isEmpty()){
+                TreeNode pop = (TreeNode) stack.pop();
+                node = pop.right;
+            }
+        }
+    }
+
+    public static void nonRecMidOrder(TreeNode root){
+        if(root==null)
+            return;
+        Stack stack = new Stack();
+        TreeNode node = root;
+        while(!stack.isEmpty() || node!=null){
+            //左子树的节点遍历
+            while (node!=null){
+                stack.push(node);
+                node = node.left;
+            }
+            if(!stack.isEmpty()){
+                TreeNode pop = (TreeNode) stack.pop();
+                node = pop.right;
+                System.out.println(pop.val);
+            }
+        }
+    }
+
+    public static void nonRecAfterOrder(TreeNode root){
+        if(root==null)
+            return;
+        Stack stack = new Stack();
+        TreeNode node = root;
+        while(!stack.isEmpty() || node!=null){
+            //左子树的节点遍历
+            while (node!=null){
+                stack.push(node);
+                if(node.right!=null){
+                    stack.push(node.right);
+                }
+                node = node.left;
+            }
+            if(!stack.isEmpty()){
+                TreeNode pop = (TreeNode) stack.pop();
+                node = pop.right;
+                System.out.println(pop.val);
+            }
+        }
     }
 }

@@ -1,9 +1,8 @@
 package com.leetcode.math;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import sun.misc.Unsafe;
+
+import java.util.*;
 
 /**
  * @Auther: Administrator
@@ -23,9 +22,14 @@ import java.util.List;
  */
 public class ThreeSum {
     public static void main(String[] args) {
-        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
-        List<List<Integer>> lists = threeSum(nums);
-        System.out.println(lists);
+//        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
+//        List<List<Integer>> lists = threeSum(nums);
+//        System.out.println(lists);
+        Map<String, String > map = new HashMap<>(4);
+        map.put("key1", "value1");
+        map.put("key2", "value2");
+        map.put("key3", "value3");
+        map.put("key4", "value4");
     }
 
     //暴力解法 时间复杂度过高

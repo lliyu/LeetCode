@@ -1,5 +1,9 @@
 package com.leetcode.array;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @Auther: Administrator
  * @Date: 2019-04-29 17:16
@@ -25,8 +29,14 @@ package com.leetcode.array;
  */
 public class MaxChunksToSorted {
     public static void main(String[] args) {
-        System.out.println(maxChunksToSorted(new int[]{4,3,2,1,0}));//1 0 2 3 4
+//        System.out.println(maxChunksToSorted(new int[]{4,3,2,1,0}));//1 0 2 3 4
 //        System.out.println(getMaxNumIndex(new int[]{1,2,4,3}, 0, 3));
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
+        Executors.newSingleThreadExecutor();
+        executorService.schedule(()->{
+            System.out.println("test");
+        }, 2, TimeUnit.SECONDS);
+        executorService.shutdown();
     }
 
     public static int maxChunksToSorted(int[] arr) {

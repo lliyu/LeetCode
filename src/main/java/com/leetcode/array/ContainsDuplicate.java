@@ -26,7 +26,7 @@ public class ContainsDuplicate {
 
     public static void main(String[] args) {
         int[] nums =new int[]{4,1,2,3,4};
-        System.out.println(containsDuplicate2(nums));
+        System.out.println(containsDuplicate(nums));
     }
 
     public static boolean containsDuplicate(int[] nums) {

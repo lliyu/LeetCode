@@ -13,7 +13,13 @@ import java.util.Arrays;
 public class TheMaxHeap {
 
     public static void main(String[] args) {
-        consMaxHeap(new int[]{5,3,2,8,7,4,9});
+//        consMaxHeap(new int[]{5,3,2,8,7,4,9});
+//        Integer s = new Integer(9);
+//        Integer t = new Integer(9);
+        Integer s = Integer.valueOf(9);
+        Integer t = Integer.valueOf(9);
+        System.out.println(s==t);
+        System.out.println(s.equals(t));
     }
 
     public static void consMaxHeap(int[] nums){

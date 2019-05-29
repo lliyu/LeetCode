@@ -1,9 +1,6 @@
 package com.leetcode.other;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
@@ -38,10 +35,10 @@ import java.util.Map;
 public class ValidBracket {
 
     public static void main(String[] args) {
-        System.out.println(isValid("]["));
+        System.out.println(isValid("(((([))))"));
     }
 
-    public static boolean isValid(String s) {
+    public static boolean isValid1(String s) {
         if(s.length() == 0)
             return true;
         if(s.length()%2 == 1)
@@ -69,5 +66,30 @@ public class ValidBracket {
         }
         return list.size() == 0;
     }
+
+    public static boolean isValid(String s) {
+        if(s.length() == 0)
+            return true;
+        if(s.length()%2 == 1)
+            return false;
+        Map<Character, Character> maps = new HashMap<>();
+        maps.put(')','(');
+        maps.put(']','[');
+        maps.put('}','{');
+        Stack<Character> stack = new Stack<>();
+        for(Character character:s.toCharArray()){
+            if(maps.containsKey(character)){
+                if(stack.isEmpty() || !maps.get(character).equals(stack.pop())){
+                    return false;
+                }
+            }else {
+                stack.push(character);
+            }
+        }
+
+        return stack.isEmpty();
+    }
+
+
 
 }

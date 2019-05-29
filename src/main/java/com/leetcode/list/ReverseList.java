@@ -20,7 +20,8 @@ public class ReverseList {
             node = node.next;
         }
     }
-    public static ListNode reverseList(ListNode head) {
+
+    public static ListNode reverseList1(ListNode head) {
         if(head.next == null || head==null)
             return head;
         ListNode newN = reverseList(head.next);
@@ -28,4 +29,18 @@ public class ReverseList {
         head.next = null;
         return newN;
     }
+
+    public static ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
+        }
+        return prev;
+    }
+
+
 }

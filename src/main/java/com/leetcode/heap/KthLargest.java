@@ -33,12 +33,24 @@ public class KthLargest {
         return queue.peek();
     }
 
+    public static int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> queue = new PriorityQueue();
+        for(int num:nums){
+            if(queue.size()<k){
+                queue.add(num);
+            }else if(queue.peek() < num) {
+                queue.poll();
+                queue.offer(num);
+            }
+        }
+        return queue.peek();
+    }
+
     public static void main(String[] args) {
         int k = 2;
         int[] nums = {4,5,8,2};
-        KthLargest obj = new KthLargest(k, nums);
-        int param_1 = obj.add(3);
-        System.out.println(param_1);
+        int kthLargest = findKthLargest(nums, 1);
+        System.out.println(kthLargest);
     }
 }
 

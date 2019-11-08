@@ -22,6 +22,7 @@ public class FindMinByBinary {
             if(nums[left] >= nums[middle]){
                 right = middle;
             }else if(nums[left] <= nums[middle]){
+
                 left = middle;
             }
         }

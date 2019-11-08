@@ -3,6 +3,7 @@ package com.leetcode.dynamic;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ly
@@ -21,11 +22,12 @@ import java.util.List;
 public class LetterCombinations {
 
     public static void main(String[] args) {
-        System.out.println(letterCombinations("1"));
+        LetterCombinations letterCombinations = new LetterCombinations();
+        System.out.println(letterCombinations.letterCombinations(""));
     }
 
     //±©Á¦Çó½â
-    public static List<String> letterCombinations(String digits) {
+    public static List<String> letterCombinations1(String digits) {
         List<String> fir = new LinkedList<>();
         if(digits.length() == 0) {
             return fir;
@@ -63,5 +65,33 @@ public class LetterCombinations {
         }
 
         return fir;
+    }
+
+    List<String> fir = new LinkedList<>();
+    Map<String, String> phone = new HashMap<String, String>() {{
+        put("2", "abc");
+        put("3", "def");
+        put("4", "ghi");
+        put("5", "jkl");
+        put("6", "mno");
+        put("7", "pqrs");
+        put("8", "tuv");
+        put("9", "wxyz");
+    }};
+
+    public List<String> letterCombinations(String digits) {
+        backTrace("",digits);
+        return fir;
+    }
+
+    private void backTrace(String s, String digits) {
+        if(digits.length() == 0){
+            fir.add(s);
+        }else {
+            String str = phone.get(digits.substring(0, 1));
+            for(char ch:str.toCharArray()){
+                backTrace(s+ch, digits.substring(1));
+            }
+        }
     }
 }

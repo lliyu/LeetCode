@@ -1,5 +1,9 @@
 package com.offer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @Auther: Administrator
  * @Date: 2019-01-25 14:53
@@ -7,9 +11,12 @@ package com.offer;
  */
 public class Permutation {
 
+    private static List<List<Integer>> lists = new ArrayList<>();
+
     public static void main(String[] args) {
-        String str = "abc";
-        permutation(str.toCharArray(), 0, str.length());
+        String str = "123";
+        permute(new int[]{1,2,3}, 0, 3);
+        System.out.println(lists);
     }
 
     private static void permutation(char[] chs, int k, int m) {
@@ -26,6 +33,27 @@ public class Permutation {
 
     private static void swap(char[] chs, int j, int k) {
         char ch = chs[j];
+        chs[j] = chs[k];
+        chs[k] = ch;
+    }
+
+    private static void permute(int[] chs, int k, int m) {
+        if (k == m) {
+            List<Integer> integers = new ArrayList<>();
+            Arrays.stream(chs).forEach(ch -> integers.add(ch));
+            lists.add(integers);
+
+        } else {
+            for (int j = k; j < m; j++) {
+                swap1(chs, j, k);
+                permute(chs, k + 1, m);
+                swap1(chs, j, k);
+            }
+        }
+    }
+
+    private static void swap1(int[] chs, int j, int k) {
+        int ch = chs[j];
         chs[j] = chs[k];
         chs[k] = ch;
     }

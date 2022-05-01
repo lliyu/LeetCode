@@ -13,12 +13,60 @@ package com.leetcode.list;
  */
 public class ReverseList {
     public static void main(String[] args) {
-        ListNode node = ListNode.createList(new int[]{1, 4, 5, 6});
-        node = reverseList(node);
+        ListNode node = ListNode.createList(new int[]{1, 2, 3, 4, 5, 6});
+        node = reverseBetween(node, 2, 4);
         while(node != null){
             System.out.print(node.val + " -> ");
             node = node.next;
         }
+    }
+
+    public static ListNode reverseBetween(ListNode head, int left, int right) {
+
+        if(left == right)
+            return head;
+
+        ListNode node = head;
+        int count = 1;
+        ListNode leftHead = null;
+        while(count < right && node!=null){
+            if(count<left){
+                if(count == left-1){
+                    //记录下需要转换的前一个位置的节点
+                    leftHead = node;
+                }
+                node = node.next;
+                count++;
+                continue;
+            }else {
+                //转换
+                ListNode next = node.next;
+                ListNode leftNext = leftHead.next;
+                leftHead.next = node.next;
+                node.next = next.next;
+                next.next = leftNext;
+
+
+//                if(node != null)
+//                    node = node.next;
+                count++;
+            }
+        }
+
+
+        return head;
+    }
+
+
+    public static ListNode reverse(ListNode pre, ListNode curr){
+        if(curr == null){
+            // 已经遍历到最后一位了
+            return pre;
+        }
+
+        ListNode next = curr.next;
+        curr.next = pre;
+        return reverse(curr, next);
     }
 
     public static ListNode reverseList1(ListNode head) {

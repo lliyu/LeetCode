@@ -1,6 +1,8 @@
 package com.leetcode.tree;
 
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 二叉树的层次遍历
@@ -27,19 +29,47 @@ public class LevelOrder {
     public static void main(String[] args) {
         TreeNode root = new TreeNode(3);
         TreeNode node1 = new TreeNode(9);
-        TreeNode node2 = new TreeNode(20);
-        TreeNode node3 = new TreeNode(15);
-        TreeNode node4 = new TreeNode(7);
-        TreeNode node5 = new TreeNode(1);
-        TreeNode node6 = new TreeNode(2);
+//        TreeNode node2 = new TreeNode(20);
+//        TreeNode node3 = new TreeNode(15);
+//        TreeNode node4 = new TreeNode(7);
+//        TreeNode node5 = new TreeNode(1);
+//        TreeNode node6 = new TreeNode(2);
         root.left = node1;
-        root.right = node2;
-        node2.left = node3;
-        node2.right = node4;
-        node1.left = node5;
-        node1.right = node6;
+//        root.right = node2;
+//        node2.left = node3;
+//        node2.right = node4;
+//        node1.left = node5;
+//        node1.right = node6;
         System.out.println(levelOrder(root));
 //        nonRecAfterOrder(root);
+    }
+
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        if(root == null)
+            return new ArrayList();
+        List<List<Integer>> lists = new ArrayList();
+        List<List<TreeNode>> nodes = new ArrayList();
+        nodes.add(Arrays.asList(root));
+        while(!nodes.isEmpty()){
+            List<TreeNode> trees = nodes.remove(0);
+            List<TreeNode> nums = new ArrayList();
+            List<Integer> temp = new ArrayList();
+            for(int i=0;i<trees.size();i++){
+                TreeNode node = trees.get(i);
+                if(node.left!=null){
+                    nums.add(node.left);
+                }
+                if(node.right!=null){
+                    nums.add(node.right);
+                }
+                temp.add(node.val);
+            }
+            if(nums.size()>0)
+                nodes.add(nums);
+            if(temp.size()>0)
+                lists.add(temp);
+        }
+        return lists;
     }
 
     public static List<List<Integer>> levelOrder1(TreeNode root) {
@@ -80,12 +110,25 @@ public class LevelOrder {
 
     }
 
-    public static List<List<Integer>> levelOrder(TreeNode root) {
+    public static List<Double> levelOrder2(TreeNode root) {
         if(root == null)
             return new ArrayList<>();
         List<List<Integer>> list = new ArrayList<>();
         order(root,list, 0);
-        return list;
+        List<Double> doubles = list.stream().map(item -> {
+            BigDecimal big = new BigDecimal(0);
+            List<BigDecimal> bigs = item.stream().map(num -> {
+                return new BigDecimal(num);
+            }).collect(Collectors.toList());
+
+            for (BigDecimal num : bigs) {
+                big = big.add(num);
+            }
+
+            return big.doubleValue() / item.size();
+        }).collect(Collectors.toList());
+
+        return doubles;
     }
 
     //简化版本

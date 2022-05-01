@@ -1,41 +1,117 @@
 package com.leetcode.dynamic;
 
-/**
- * ´ò¼Ò½ÙÉá
- ÄãÊÇÒ»¸ö×¨ÒµµÄĞ¡Íµ£¬¼Æ»®ÍµÇÔÑØ½ÖµÄ·¿Îİ¡£Ã¿¼ä·¿ÄÚ¶¼²ØÓĞÒ»¶¨µÄÏÖ½ğ£¬
- Ó°ÏìÄãÍµÇÔµÄÎ¨Ò»ÖÆÔ¼ÒòËØ¾ÍÊÇÏàÁÚµÄ·¿Îİ×°ÓĞÏà»¥Á¬Í¨µÄ·ÀµÁÏµÍ³£¬Èç¹ûÁ½¼äÏàÁÚµÄ·¿ÎİÔÚÍ¬Ò»ÍíÉÏ±»Ğ¡Íµ´³Èë£¬ÏµÍ³»á×Ô¶¯±¨¾¯¡£
-
- ¸ø¶¨Ò»¸ö´ú±íÃ¿¸ö·¿Îİ´æ·Å½ğ¶îµÄ·Ç¸ºÕûÊıÊı×é£¬¼ÆËãÄãÔÚ²»´¥¶¯¾¯±¨×°ÖÃµÄÇé¿öÏÂ£¬ÄÜ¹»ÍµÇÔµ½µÄ×î¸ß½ğ¶î¡£
-
- Ê¾Àı 1:
-
- ÊäÈë: [1,2,3,1]
- Êä³ö: 4
- ½âÊÍ: ÍµÇÔ 1 ºÅ·¿Îİ (½ğ¶î = 1) £¬È»ºóÍµÇÔ 3 ºÅ·¿Îİ (½ğ¶î = 3)¡£
- ÍµÇÔµ½µÄ×î¸ß½ğ¶î = 1 + 3 = 4 ¡£
- Ê¾Àı 2:
-
- ÊäÈë: [2,7,9,3,1,2,4,6,7,9,0,5,5,3,1,6,8,1,3,6,8,0,2,3,4,5,6,7,4,32]
- Êä³ö: 12
- ½âÊÍ: ÍµÇÔ 1 ºÅ·¿Îİ (½ğ¶î = 2), ÍµÇÔ 3 ºÅ·¿Îİ (½ğ¶î = 9)£¬½Ó×ÅÍµÇÔ 5 ºÅ·¿Îİ (½ğ¶î = 1)¡£
- ÍµÇÔµ½µÄ×î¸ß½ğ¶î = 2 + 9 + 1 = 12 ¡£
- **/
 public class Rob {
 
-    public int rob(int[] nums) {
-        if(nums.length == 0)
-            return 0;
-        if(nums.length==1)
+    public static void main(String[] args) {
+        int[] nums = {2 , 3, 2};
+//        System.out.println(rob2(nums, 0, nums.length - 1));
+//        System.out.println(rob2(nums, 1, nums.length));
+//        int max = Math.max(rob2(nums, 0, nums.length - 2), rob2(nums, 1, nums.length - 1));
+//        System.out.println(max);
+//        System.out.println(rob(new int[]{1,2,3,1}));
+    }
+
+    /**
+     * åœ¨åŸæ¥çš„åŸºç¡€ä¸ŠåŠ äº†ä¸€ä¸ªç¯çš„æ ¡éªŒ é¦–å°¾ä¹Ÿç®—ç›¸é‚»
+     * è§£å†³å°±æ˜¯å°†åŸæ¥çš„æ€è·¯ç¯åˆ†ä¸ºä¸¤ä¸ªéƒ¨åˆ†
+     * @param nums
+     * @return
+     */
+    public static int rob2(int[] nums) {
+        if(nums.length == 1)
             return nums[0];
-        int oddSum=0,evenSum=0;
-        for(int i=0;i<nums.length;i++){
-            if(i%2==0){
-                evenSum = Math.max(nums[i]+evenSum, oddSum) ;
+        return Math.max(dp(nums, 0, nums.length - 1), dp(nums, 1, nums.length));
+    }
+
+    public static int dp(int[] nums, int left, int right) {
+
+        if(right<left)
+            return -1;
+        if(right-left == 0 && left<nums.length)
+            return nums[left];
+
+        int[] dp = new int[right-left+1];
+        dp[1] = nums[left];
+
+        for(int i=2;i<dp.length;i++){
+            dp[i] = Math.max(dp[i-1], dp[i-2]+nums[left + i-1]);
+        }
+        return dp[right-left];
+    }
+
+    public static int rob(int[] nums) {
+
+        if(nums.length == 1)
+            return nums[0];
+
+        int[] dp = new int[nums.length+1];
+        dp[1] = nums[0];
+
+        for(int i=2;i<=nums.length;i++){
+            dp[i] = Math.max(dp[i-1], dp[i-2]+nums[i-1]);
+        }
+        return dp[nums.length];
+    }
+
+    public static int rob1(int[] nums) {
+
+        if(nums==null || nums.length==0)
+            return 0;
+        if(nums.length == 1)
+            return nums[0];
+        int length = nums.length;
+
+        int[] dp1 = new int[length];//dp[i]è¡¨ç¤ºä»0-iå¯å¾—åˆ°çš„æœ€å¤§çš„é‡‘é¢
+        int[] dp2 = new int[length];//dp[i]è¡¨ç¤ºä»0-iå¯å¾—åˆ°çš„æœ€å¤§çš„é‡‘é¢
+        dp1[0] = nums[0];dp1[1] = nums[0];
+        dp2[1] = nums[1];
+        boolean isPreDp1 = false;
+        for(int i=2;i<length-1;i++){
+            if(isPreDp1){//è¿™ç§æƒ…å†µä¸‹ç†è®ºä¸Šè¯¥dp2åŠ 
+                if(dp1[i-1] > dp2[i-1] && ((dp1[i-1]-nums[i-1] +nums[i]) > dp1[i-1] && (dp2[i-1]+nums[i]) < (dp1[i-1]-nums[i-1] +nums[i]))){
+                    //è¿™ç§æƒ…å†µä¸‹éœ€è¦è®¨è®ºæ˜¯å¦dp1å‡å»å‰ä¸€ä¸ª è€ŒåŠ ä¸Šå½“å‰çš„æ›´åˆé€‚
+                    dp1[i] = dp1[i-1]-nums[i-1] +nums[i];
+                    dp2[i] = dp2[i-1];
+                    isPreDp1 = true;
+                }else {
+                    dp2[i] = dp2[i-1] + nums[i];
+                    dp1[i] = dp1[i-1];
+                    isPreDp1 = false;
+                }
             }else {
-                oddSum = Math.max(nums[i]+oddSum, evenSum) ;
+                if(dp1[i-1] < dp2[i-1] && (dp2[i-1]-nums[i-1] +nums[i]) > dp2[i-1] && (dp1[i-1]+nums[i]) < (dp2[i-1]-nums[i-1] +nums[i])){
+                    //è¿™ç§æƒ…å†µä¸‹éœ€è¦è®¨è®ºæ˜¯å¦dp1å‡å»å‰ä¸€ä¸ª è€ŒåŠ ä¸Šå½“å‰çš„æ›´åˆé€‚
+                    dp2[i] = dp1[i-1]-nums[i-1] +nums[i];
+                    dp1[i] = dp1[i-1];
+                    isPreDp1 = false;
+                }else {
+                    dp1[i] = dp1[i-1] + nums[i];
+                    dp2[i] = dp2[i-1];
+                    isPreDp1 = true;
+                }
+            }
+        }
+        //å•ç‹¬å¤„ç†æœ€åä¸€ä½
+        if(isPreDp1){
+            dp2[length-1] = dp2[length-2] + nums[length-1];
+            dp1[length-1] = dp1[length-2];
+            if ((dp1[length-2] + nums[length-1] - nums[0]-nums[length-2]) > dp2[length-1] && (dp1[length-2] + nums[length-1] - nums[0]-nums[length-2])>dp1[length-1]) {
+                return (dp1[length-2] + nums[length-1] - nums[0]);
+            }
+        }else{
+            //æœ€åä¸€ä½å’Œç¬¬ä¸€ä½éœ€è¦å»æ‰ä¸€ä¸ª
+            if(nums[0] > nums[length-1]){
+                dp1[length-1] = dp1[length-2];
+            }else {
+                dp1[length-1] = dp1[length-2] + nums[length-1] - nums[0];
+            }
+            dp2[length-1] = dp2[length-2];
+            if(dp2[length-1] <(dp2[length-1] - nums[length-2] + nums[length-1])){
+                dp2[length-1] = dp2[length-1] - nums[length-2] + nums[length-1];
             }
         }
 
-        return oddSum>evenSum?oddSum:evenSum;
+        return dp1[length-1]>dp2[length-1]?dp1[length-1]:dp2[length-1];
     }
+
 }

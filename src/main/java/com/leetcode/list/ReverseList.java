@@ -13,82 +13,47 @@ package com.leetcode.list;
  */
 public class ReverseList {
     public static void main(String[] args) {
-        ListNode node = ListNode.createList(new int[]{1, 2, 3, 4, 5, 6});
-        node = reverseBetween(node, 2, 4);
+        ListNode node = ListNode.createList(new int[]{1, 2, 3, 4, 5});
+        node = reverseList(node);
         while(node != null){
             System.out.print(node.val + " -> ");
             node = node.next;
         }
     }
 
-    public static ListNode reverseBetween(ListNode head, int left, int right) {
-
-        if(left == right)
+    //递归
+    public static ListNode reverseList(ListNode head) {
+        // 1. 递归终止条件
+        if (head == null || head.next == null) {
             return head;
-
-        ListNode node = head;
-        int count = 1;
-        ListNode leftHead = null;
-        while(count < right && node!=null){
-            if(count<left){
-                if(count == left-1){
-                    //记录下需要转换的前一个位置的节点
-                    leftHead = node;
-                }
-                node = node.next;
-                count++;
-                continue;
-            }else {
-                //转换
-                ListNode next = node.next;
-                ListNode leftNext = leftHead.next;
-                leftHead.next = node.next;
-                node.next = next.next;
-                next.next = leftNext;
-
-
-//                if(node != null)
-//                    node = node.next;
-                count++;
-            }
         }
-
-
-        return head;
-    }
-
-
-    public static ListNode reverse(ListNode pre, ListNode curr){
-        if(curr == null){
-            // 已经遍历到最后一位了
-            return pre;
-        }
-
-        ListNode next = curr.next;
-        curr.next = pre;
-        return reverse(curr, next);
-    }
-
-    public static ListNode reverseList1(ListNode head) {
-        if(head.next == null || head==null)
-            return head;
-        ListNode newN = reverseList(head.next);
+        ListNode node = reverseList(head.next);
+        //翻转head和node
+        // head.next.next一定不会为空，上面的终止条件保证这里head后一定有至少一个节点
+        // 这一步将
         head.next.next = head;
         head.next = null;
-        return newN;
+        return node;
     }
 
-    public static ListNode reverseList(ListNode head) {
-        ListNode prev = null;
-        ListNode curr = head;
-        while (curr != null) {
-            ListNode nextTemp = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nextTemp;
+    /**
+     * 迭代翻转
+     **/
+    public ListNode reverseList1(ListNode head) {
+        if (head == null) return null;
+        if(head.next == null) return head;
+        ListNode dummp = new ListNode(0);
+        ListNode node = head;
+        dummp.next = node;
+        ListNode next = node.next;
+        while(next != null) {
+            ListNode temp = dummp.next;
+            node.next = next.next;
+            dummp.next = next;
+            next.next = temp;
+            next = node.next;
         }
-        return prev;
+        return dummp.next;
     }
-
 
 }

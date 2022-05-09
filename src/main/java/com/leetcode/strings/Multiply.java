@@ -29,6 +29,16 @@ public class Multiply {
         System.out.println(multiply.multiply("123", "456"));
     }
 
+    /**
+     * 字符串的计算一类的题目主要注意几个点
+     * 1。初始状态以及0值的特殊处理
+     * 2。字符串大多需要进行翻转处理，模拟运算过程
+     * 3。注意保存中间过程的状态，比如进位等
+     * 4。流程最后要记得处理进位 防止少进一位导致结果出错
+     * @param num1
+     * @param num2
+     * @return
+     */
     public String multiply(String num1, String num2) {
         String rnt = "0";
         if (num1.length()==1&&num1.charAt(0)=='0') return rnt;

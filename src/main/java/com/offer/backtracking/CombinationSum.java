@@ -36,7 +36,7 @@ import java.util.List;
 public class CombinationSum {
     private static List<List<Integer>> lists = null;
 
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum1(int[] candidates, int target) {
         Arrays.sort(candidates);
         //leetcode中测试用例应该是在一个主函数中提交所有的用例
         //这样就会导致一个共享变量会存储所有的结果 使得后一个用例的结果包含了前一个用例的结果
@@ -44,7 +44,7 @@ public class CombinationSum {
         lists = new ArrayList<>();
         int len = (int) Math.ceil(target*1.0/candidates[0]);
         int[] temp = new int[len];
-        backtrace(candidates, target, 0, temp, 0, 0);
+        backtrace1(candidates, target, 0, temp, 0, 0);
         return lists;
     }
 
@@ -57,7 +57,7 @@ public class CombinationSum {
      * @param index index用来保存temp记录到具体哪一个位置了 在取结果时根据index的大小从temp数组中取
      * @param k k用来记录迭代循环时从哪一个位置开始  保证不会重复取前面的数
      */
-    private void backtrace(int[] candidates, int target, int sum, int[] temp, int index, int k) {
+    private void backtrace1(int[] candidates, int target, int sum, int[] temp, int index, int k) {
         if (target<sum){
             return;
         }else if(target == sum){
@@ -71,9 +71,29 @@ public class CombinationSum {
             for (int i = k; i < candidates.length; i++) {
                 temp[index] = candidates[i];
                 //因为可以重复取当前数 所以这里传递i 而不是i+1
-                backtrace(candidates, target, sum + candidates[i], temp, index+1, i);
+                backtrace1(candidates, target, sum + candidates[i], temp, index+1, i);
                 temp[index] = 0;
             }
+        }
+    }
+
+    private List<List<Integer>> rnt = new ArrayList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+
+        backtrace(candidates, target, new ArrayList<>(), 0);
+        return rnt;
+    }
+
+    public void backtrace(int[] candidates, int target, List<Integer> path, int index) {
+        if(target < 0 || index==candidates.length) return;
+        if(target == 0){
+            rnt.add(new ArrayList<>(path));
+        }
+
+        for(int i=index; i<candidates.length; i++) {
+            path.add(candidates[i]);
+            backtrace(candidates, target-candidates[i], path, i);
+            path.remove(path.size()-1);
         }
     }
 

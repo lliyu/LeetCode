@@ -28,41 +28,44 @@ package com.leetcode.array;
  */
 public class MaxProfit {
     public static void main(String[] args) {
-        int[] nums =new int[]{7,3,5,1,2};
-        System.out.println(maxProfit3(nums));
+        int[] nums =new int[]{6,1,3,2,4,7};
+        System.out.println(maxProfit2(nums));
     }
 
+    /**
+     * 输入：[7,1,5,3,6,4]
+     * 输出：5
+     * 解释：在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     *      注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。
+     */
     public static int maxProfit1(int[] prices) {
-        if(prices.length == 0){
-            return 0;
+        int min = prices[0];
+        int price = 0;
+        for(int i=1; i<prices.length; i++) {
+            min = Math.min(min, prices[i]);
+            price = Math.max(price, prices[i]-min);
         }
-        int count = prices[0], sum = 0;
-        boolean isSelf = true;
-        for(int i=0; i< prices.length-1; i++){
-            if((prices[i] < prices[i+1]) && isSelf){
-                count = prices[i];
-                isSelf = false;
-            }else if((prices[i] >= prices[i+1]) && !isSelf){
-                sum += prices[i] - count;
-                isSelf = true;
-            }
-        }
-        if(!isSelf){
-            int res = prices[prices.length-1] - count;
-            if(res > 0){
-                sum += res;
-            }
-        }
-        return sum;
+        return price;
     }
 
+    /**
+     * 股票交易2  可以多次成交 但是每天最多持有一只股票
+     * 输入：prices = [7,1,5,3,6,4]
+     * 输出：7
+     * 解释：在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4 。
+     *      随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6 - 3 = 3 。
+     *      总利润为 4 + 3 = 7 。
+     */
     public static int maxProfit2(int[] prices) {
         int sum = 0;
-        for(int i=0; i<prices.length-1; i++){
-            if(prices[i]<prices[i+1])
-                sum += prices[i+1] - prices[i];
+        int min = prices[0];
+        for(int i=1; i<prices.length; i++) {
+            if(prices[i]<prices[i-1]) {
+                sum += prices[i-1]-min;
+                min = prices[i];
+            }
         }
-        return sum;
+        return sum + prices[prices.length-1]-min;
     }
 
     /**
@@ -93,29 +96,5 @@ public class MaxProfit {
             }
         }
         return res;
-    }
-
-    private static void maxPro(int[] prices, int len) {
-
-    }
-
-    public static int maxNum(int[] prices,int len){
-        int max = 0;
-        for(int i=0;i<len;i++){
-            if(prices[i] > max){
-                max = i;
-            }
-        }
-        return max;
-    }
-
-    public static int minNum(int[] prices,int len){
-        int min = 0;
-        for(int i=0;i<len;i++){
-            if(prices[i] < min){
-                min = i;
-            }
-        }
-        return min;
     }
 }

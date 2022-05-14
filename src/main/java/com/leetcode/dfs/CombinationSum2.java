@@ -1,8 +1,6 @@
 package com.leetcode.dfs;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CombinationSum2 {
 
@@ -11,11 +9,26 @@ public class CombinationSum2 {
         System.out.println(lists);
     }
 
-    public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> lists = new ArrayList<>();
+    private Set<List<Integer>> rnt = new HashSet<>();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
-//        dfs(lists, candidates, target, new ArrayList<Integer>(), 0);
-        return new ArrayList<>(lists);
+        backtrace(candidates, target, new ArrayList<>(), 0);
+        return new ArrayList<>(rnt);
+    }
+
+    public void backtrace(int[] candidates, int target, List<Integer> path, int index) {
+        if(target == 0){
+            rnt.add(new ArrayList<>(path));
+            return;
+        }
+        if(target < 0 || index==candidates.length) return;
+
+        for(int i=index; i<candidates.length; i++) {
+            if(i>index && candidates[i]==candidates[i-1]) continue; // 剪枝
+            path.add(candidates[i]);
+            backtrace(candidates, target-candidates[i], path, i+1);
+            path.remove(path.size()-1);
+        }
     }
 
     public static List<List<Integer>> combinationSum3(int k, int n) {

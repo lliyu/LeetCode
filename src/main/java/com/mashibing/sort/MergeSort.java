@@ -1,8 +1,6 @@
 package com.mashibing.sort;
 
 import com.entity.Student;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;

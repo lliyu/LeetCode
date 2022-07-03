@@ -28,12 +28,33 @@
 // Related Topics 数组 分治 快速选择 排序 堆（优先队列） 👍 1700 👎 0
 package com.leetcode.editor.cn;
 
+import java.util.PriorityQueue;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class FindKthLargest {
-    public int findKthLargest(int[] nums, int k) {
 
-        return 0;
+    public static void main(String[] args) {
+        FindKthLargest largest = new FindKthLargest();
+        largest.findKthLargest(new int[]{3,2,1,5,6,4}, 2);
+    }
+
+    public int findKthLargest(int[] nums, int k) {
+        //构建一个小根堆
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        for (int num : nums) {
+            if (queue.size() >= k) {
+                //比较堆顶元素和当前元素的大小
+                if (queue.peek() < num) {
+                    // 如果当前堆顶元素小于当前元素 那么就需要将其移除，保证堆内元素是遍历到目前为止最大的k个数
+                    queue.poll();
+                    queue.add(num);
+                }
+            } else {
+                queue.add(num);
+            }
+        }
+
+        return queue.peek();
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
